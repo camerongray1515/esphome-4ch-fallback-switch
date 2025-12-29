@@ -1,6 +1,9 @@
 esphome:
   name: 4ch-fallback-switch
   friendly_name: 4ch-fallback-switch
+  project:
+    name: "camerongray1515.esphome-4ch-fallback-switch"
+    version: "0.0.1"
 
   name_add_mac_suffix: true
 
@@ -18,6 +21,9 @@ api:
 
 ota:
   - platform: esphome
+
+dashboard_import:
+  package_import_url: github://camerongray1515/esphome-4ch-fallback-switch/esphome-4ch-fallback-switch.yaml
 
 status_led:
   pin:
