@@ -23,7 +23,8 @@ ota:
   - platform: esphome
 
 dashboard_import:
-  package_import_url: github://camerongray1515/esphome-4ch-fallback-switch/esphome-4ch-fallback-switch.yaml
+  package_import_url: github://camerongray1515/esphome-4ch-fallback-switch/esphome-4ch-fallback-switch.yaml@main
+  import_full_config: True
 
 status_led:
   pin:
