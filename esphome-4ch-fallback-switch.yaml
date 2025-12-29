@@ -1,0 +1,181 @@
+esphome:
+  name: 4ch-fallback-switch
+  friendly_name: 4ch-fallback-switch
+
+  name_add_mac_suffix: true
+
+bk72xx:
+  board: cbu
+
+logger:
+
+wifi:
+  ap: {}
+
+captive_portal:
+
+api:
+
+ota:
+  - platform: esphome
+
+status_led:
+  pin:
+    number: GPIO11
+    inverted: yes
+
+output:
+  - platform: gpio
+    pin: GPIO10
+    id: relay1
+  - platform: gpio
+    pin: GPIO24
+    id: relay2
+  - platform: gpio
+    pin: GPIO26
+    id: relay3
+  - platform: gpio
+    pin: GPIO28
+    id: relay4
+
+switch:
+  - platform: output
+    name: "Relay 1"
+    output: relay1
+    id: sw1
+  - platform: output
+    name: "Relay 2"
+    output: relay2
+    id: sw2
+  - platform: output
+    name: "Relay 3"
+    output: relay3
+    id: sw3
+  - platform: output
+    name: "Relay 4"
+    output: relay4
+    id: sw4
+
+button:
+  - platform: template
+    name: "Confirm 1"
+    on_press: 
+      then:
+        - script.stop: fallback_1
+  - platform: template
+    name: "Confirm 2"
+    on_press: 
+      then:
+        - script.stop: fallback_2
+  - platform: template
+    name: "Confirm 3"
+    on_press: 
+      then:
+        - script.stop: fallback_3
+  - platform: template
+    name: "Confirm 4"
+    on_press: 
+      then:
+        - script.stop: fallback_4
+
+binary_sensor:
+  - platform: gpio
+    internal: false
+    pin:
+      number: GPIO6
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+    on_click: 
+      then:
+        - script.execute: fallback_1
+    name: "S1"
+  - platform: gpio
+    internal: false
+    pin:
+      number: GPIO7
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+    on_click: 
+      then:
+        - script.execute: fallback_2
+    name: "S2"
+  - platform: gpio
+    internal: false
+    pin:
+      number: GPIO8
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+    on_click: 
+      then:
+        - script.execute: fallback_3
+    name: "S3"
+  - platform: gpio
+    internal: false
+    pin:
+      number: GPIO9
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+    name: "S4"
+  - platform: gpio
+    internal: true
+    pin:
+      number: GPIO23
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+    on_click: 
+      then:
+        - script.execute: fallback_4
+    name: "Push Button"
+
+
+script:
+  - id: fallback_1
+    then:
+      if:
+        condition:
+          - switch.is_off: sw1
+        then:
+          - switch.turn_on: sw1
+        else:
+          - delay: 1s
+          - switch.turn_off: sw1
+  - id: fallback_2
+    then:
+      if:
+        condition:
+          - switch.is_off: sw2
+        then:
+          - switch.turn_on: sw2
+        else:
+          - delay: 1s
+          - switch.turn_off: sw2
+  - id: fallback_3
+    then:
+      if:
+        condition:
+          - switch.is_off: sw3
+        then:
+          - switch.turn_on: sw3
+        else:
+          - delay: 1s
+          - switch.turn_off: sw3
+  - id: fallback_4
+    then:
+      if:
+        condition:
+          - switch.is_off: sw4
+        then:
+          - switch.turn_on: sw4
+        else:
+          - delay: 1s
+          - switch.turn_off: sw4
