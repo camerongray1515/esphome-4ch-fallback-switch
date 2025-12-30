@@ -130,6 +130,9 @@ binary_sensor:
         input: true
         pullup: true
       inverted: true
+    on_click: 
+      then:
+        - script.execute: fallback_4
     name: "S4"
   - platform: gpio
     internal: true
@@ -139,9 +142,6 @@ binary_sensor:
         input: true
         pullup: true
       inverted: true
-    on_click: 
-      then:
-        - script.execute: fallback_4
     name: "Push Button"
 
 
